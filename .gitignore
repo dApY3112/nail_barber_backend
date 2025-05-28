@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# VSCode settings
+.vscode/
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# env files
+.env
+*.env
+
+# PIP
+pip-log.txt
+pip-delete-this-directory.txt
+
+# MySQL, SQLite, etc.
+*.db
+*.sqlite3
+
+# Alembic (nếu bạn không muốn commit migration tự sinh)
+# alembic/versions/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE folders
+.idea/
