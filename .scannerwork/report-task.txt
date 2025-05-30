@@ -1,0 +1,6 @@
+projectKey=Nail_barber
+serverUrl=http://localhost:9000
+serverVersion=25.1.0.102122
+dashboardUrl=http://localhost:9000/dashboard?id=Nail_barber
+ceTaskId=e99d6aac-8993-4440-8b4e-f2a06d6405e3
+ceTaskUrl=http://localhost:9000/api/ce/task?id=e99d6aac-8993-4440-8b4e-f2a06d6405e3

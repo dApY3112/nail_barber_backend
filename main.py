@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(title="Nail&Barber API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # thêm URL frontend
+    allow_origins=["https://nail-barber-rhfyx7pw7-dapys-projects.vercel.app/"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
