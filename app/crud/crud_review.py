@@ -4,25 +4,18 @@ from sqlalchemy import func
 from fastapi import HTTPException, status
 from app.models.review import Review
 from app.schemas.review import ReviewCreate
-from app.models.booking import Booking
+from app.models.provider import Provider
 
 class CRUDReview:
     def create(self, db: Session, obj_in: ReviewCreate, client_id: str) -> Review:
         # Verify booking exists and ownership
-        booking = db.get(Booking, obj_in.booking_id)
-        if not booking:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Booking not found")
-        if str(booking.client_id) != client_id:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not your booking")
-        # Ensure booking not already reviewed
-        exists = db.query(Review).filter(Review.booking_id == obj_in.booking_id).first()
-        if exists:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Booking already reviewed")
+        provider = db.get(Provider, obj_in.provider_id)
+        if not provider:
+            raise HTTPException(404, "Provider not found")
         # Create review
         db_obj = Review(
-            booking_id=obj_in.booking_id,
-            provider_id=booking.provider_id,
-            client_id=booking.client_id,
+            provider_id=obj_in.provider_id,
+            client_id=client_id,
             rating=obj_in.rating,
             comment=obj_in.comment
         )

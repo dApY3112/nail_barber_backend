@@ -54,5 +54,16 @@ class CRUDTransaction:
         db.commit()
         db.refresh(db_obj)
         return db_obj
+    def get_by_client(
+        self,
+        db: Session,
+        client_id: str
+    ) -> List[Transaction]:
+        return (
+            db.query(Transaction)
+              .filter(Transaction.client_id == client_id)
+              .order_by(Transaction.created_at.desc())
+              .all()
+    )
 
 crud_transaction = CRUDTransaction()

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, HttpUrl
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 from datetime import datetime
 
@@ -31,6 +31,12 @@ class ServiceResponse(ServiceBase):
     reviews_count: int
     created_at: datetime
     updated_at: datetime
+
+    class Config:
+        from_attributes = True
+class ServiceList(BaseModel):
+    total: int
+    items: List[ServiceResponse]
 
     class Config:
         from_attributes = True

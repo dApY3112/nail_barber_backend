@@ -41,3 +41,13 @@ def delete_availability(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not a provider")
     crud_availability.remove(db, availability_id=availability_id)
     return None
+@router.get(
+    "/provider/{provider_id}",
+    response_model=List[AvailabilityResponse],
+    status_code=status.HTTP_200_OK
+)
+def list_availability_public(
+    provider_id: str,
+    db: Session = Depends(get_db)
+):
+    return crud_availability.get_by_provider(db, provider_id=provider_id)

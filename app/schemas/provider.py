@@ -7,8 +7,8 @@ from .availability import AvailabilityResponse
 class ProviderBase(BaseModel):
     company_name: Optional[str] = None
     description: Optional[str] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
 
 class ProviderCreate(ProviderBase):
     pass

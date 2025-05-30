@@ -7,7 +7,7 @@ from app.crud.crud_booking import crud_booking
 from app.crud.crud_provider import crud_provider
 from app.models.user import User
 from app.models.service import Service  # thêm import
-
+from app.models.booking import Booking
 router = APIRouter()
 
 @router.post("/", response_model=BookingResponse, status_code=status.HTTP_201_CREATED)
@@ -63,4 +63,23 @@ def cancel_booking(
     # Only client or provider who owns booking can cancel
     if booking.client_id != current_user.id and booking.provider_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized")
+    return booking
+@router.get("/{booking_id}", response_model=BookingResponse)
+def get_booking(
+    booking_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    booking = db.get(Booking, booking_id)
+    if not booking:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Booking not found"
+        )
+    # Chỉ client hoặc provider mới xem được
+    if str(booking.client_id) != str(current_user.id) and str(booking.provider_id) != str(current_user.id):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to view this booking"
+        )
     return booking

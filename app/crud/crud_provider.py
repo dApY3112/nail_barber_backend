@@ -10,8 +10,8 @@ class CRUDProvider:
             user_id=user_id,
             company_name=obj_in.company_name,
             description=obj_in.description,
-            latitude=obj_in.latitude,
-            longitude=obj_in.longitude
+            city=obj_in.city,
+            country=obj_in.country
         )
         db.add(db_obj)
         db.commit()
@@ -24,17 +24,18 @@ class CRUDProvider:
     def get_by_user(self, db: Session, user_id: str) -> Optional[Provider]:
         return db.query(Provider).filter(Provider.user_id == user_id).first()
 
-    def get_multi(self, db: Session, skip: int = 0, limit: int = 20,
-                  lat: Optional[float] = None, lon: Optional[float] = None,
-                  radius: Optional[float] = None,
-                  category: Optional[str] = None,
-                  min_rating: Optional[float] = None,
-                  sort_by: str = "distance") -> List[Provider]:
+    def get_multi(self,
+                db: Session,
+                skip: int = 0,
+                limit: int = 20,
+                city: Optional[str] = None,
+                country: Optional[str] = None
+                ) -> List[Provider]:
         query = db.query(Provider)
-        if lat is not None and lon is not None and radius is not None:
-            query = query.filter(
-                func.pow((Provider.latitude - lat), 2) + func.pow((Provider.longitude - lon), 2) <= radius * radius
-            )
+        if city:
+            query = query.filter(Provider.city == city)
+        if country:
+            query = query.filter(Provider.country == country)
         query = query.offset(skip).limit(limit)
         return query.all()
 

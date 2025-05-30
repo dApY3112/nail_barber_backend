@@ -9,6 +9,7 @@ class CRUDUser:
             email=obj_in.email,
             first_name=obj_in.first_name,
             last_name=obj_in.last_name,
+            phone=obj_in.phone,
             password_hash=hash_password(obj_in.password),
             role=obj_in.role
         )
